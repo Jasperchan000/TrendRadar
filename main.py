@@ -948,7 +948,14 @@ def matches_word_groups(
     if not word_groups:
         return True
 
-    title_lower = title.lower()
+    # === 修复开始：增加类型安全检查 ===
+    # 1. 如果标题是 None，直接返回不匹配
+    if title is None:
+        return False
+        
+   # 2. 强制将标题转换为字符串，防止 float/int 类型导致 .lower() 报错
+    title_lower = str(title).lower()
+    # === 修复结束 ===
 
     # 过滤词检查
     if any(filter_word.lower() in title_lower for filter_word in filter_words):
